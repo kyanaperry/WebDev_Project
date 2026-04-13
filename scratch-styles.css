@@ -1,0 +1,87 @@
+/* BODY (includes sticky footer setup) */
+body {
+  background-color: #eef3f8;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1f2d3d;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* NAV BAR */
+.top-nav {
+  background-color: #1f3c5a;
+  padding: 15px;
+  text-align: center;
+}
+
+.top-nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER SECTION */
+.header-box {
+  background-color: white;
+  width: 80%;
+  margin: 30px auto;
+  padding: 25px;
+  border: 2px solid #c9d6e2;
+  text-align: center;
+}
+
+/* MAIN CONTENT BLOCKS */
+.content-box {
+  background-color: white;
+  width: 80%;
+  margin: 20px auto;
+  padding: 25px;
+  border: 2px solid #d8e1ea;
+}
+
+/* FOOTER (sticky behavior here) */
+.footer-box {
+  background-color: #dbe7f1;
+  width: 80%;
+  margin: 20px auto 40px auto;
+  padding: 20px;
+  text-align: center;
+
+  margin-top: auto; /* THIS makes it stick to bottom */
+}
+
+/* HEADINGS */
+h1, h2 {
+  font-family: Arial, sans-serif;
+  color: #16324f;
+}
+
+/* IMAGE */
+img {
+  display: block;
+  width: 70%;
+  max-width: 700px;
+  margin: 20px auto;
+  border-radius: 8px;
+}
+
+/* VIDEO */
+.video-wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* LISTS */
+ol, ul {
+  margin-left: 30px;
+}
+
+/* PARAGRAPHS */
+p {
+  line-height: 1.6;
+}
