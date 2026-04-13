@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyana Perry | Would You Invest?</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef3f8;
+      color: #1f2d3d;
+    }
+
+    .nav {
+      background: #1f3c5a;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #16324f;
+    }
+
+    .company-card {
+      background: #f8fbfe;
+      border: 2px solid #d6e2ec;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .stats {
+      margin-top: 15px;
+      padding-left: 20px;
+    }
+
+    .buttons {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    button {
+      background: #1f3c5a;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16324f;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background: #edf5fb;
+      border-left: 5px solid #1f3c5a;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .score-box {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .next-btn {
+      display: none;
+      margin: 20px auto 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 25px;
+      color: #5c6b7a;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <a href="scratch.html">Back to Scratch Page</a>
+    <a href="index.html">Home</a>
+    <a href="resume.html">Resume</a>
+  </div>
+
+  <div class="container">
+    <h1>Would You Invest?</h1>
+    <p style="text-align:center;">
+      Review the company snapshot below and decide whether you would invest or pass.
+    </p>
+
+    <div class="company-card">
+      <h2 id="companyName">Company Name</h2>
+      <p id="companyDescription">Description goes here.</p>
+
+      <ul class="stats">
+        <li><strong>Revenue Growth:</strong> <span id="growth"></span></li>
+        <li><strong>Profit Margin:</strong> <span id="margin"></span></li>
+        <li><strong>Debt Level:</strong> <span id="debt"></span></li>
+        <li><strong>Industry:</strong> <span id="industry"></span></li>
+      </ul>
+    </div>
+
+    <div class="buttons">
+      <button onclick="makeChoice('invest')">Invest</button>
+      <button onclick="makeChoice('pass')">Pass</button>
+    </div>
+
+    <div class="result" id="resultBox"></div>
+
+    <div class="score-box">
+      Score: <span id="score">0</span> / <span id="round">0</span>
+    </div>
+
+    <div class="buttons">
+      <button class="next-btn" id="nextButton" onclick="nextCompany()">Next Company</button>
+    </div>
+
+    <p class="footer-note">
+      This is a finance-themed mini web app created in a single HTML file.
+    </p>
+  </div>
+
+  <script>
+    const companies = [
+      {
+        name: "BluePeak Solar",
+        description: "A renewable energy company expanding rapidly into suburban markets.",
+        growth: "28%",
+        margin: "12%",
+        debt: "Medium",
+        industry: "Energy",
+        goodChoice: "invest",
+        explanation: "Strong growth and healthy margins make this a promising opportunity despite moderate debt."
+      },
+      {
+        name: "QuickCart Express",
+        description: "A delivery startup growing fast but burning cash to acquire customers.",
+        growth: "35%",
+        margin: "-8%",
+        debt: "High",
+        industry: "Logistics",
+        goodChoice: "pass",
+        explanation: "Rapid growth is attractive, but negative margins and high debt make this investment risky."
+      },
+      {
+        name: "Summit Health Tech",
+        description: "A healthcare software firm with stable contracts and recurring revenue.",
+        growth: "15%",
+        margin: "22%",
+        debt: "Low",
+        industry: "Healthcare Technology",
+        goodChoice: "invest",
+        explanation: "Recurring revenue, low debt, and strong margins suggest a stable and scalable business."
+      },
+      {
+        name: "TrendLoop Fashion",
+        description: "A trendy clothing brand boosted by social media but facing unpredictable sales.",
+        growth: "10%",
+        margin: "4%",
+        debt: "Medium",
+        industry: "Retail",
+        goodChoice: "pass",
+        explanation: "Low margins and uncertain long-term demand make this less attractive from an investment perspective."
+      },
+      {
+        name: "NorthStar Analytics",
+        description: "A data analytics company serving enterprise clients with strong retention.",
+        growth: "19%",
+        margin: "18%",
+        debt: "Low",
+        industry: "Software",
+        goodChoice: "invest",
+        explanation: "Good margins, healthy growth, and low debt make this a strong candidate."
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let round = 0;
+    let answered = false;
+
+    function loadCompany() {
+      const company = companies[currentIndex];
+      document.getElementById("companyName").textContent = company.name;
+      document.getElementById("companyDescription").textContent = company.description;
+      document.getElementById("growth").textContent = company.growth;
+      document.getElementById("margin").textContent = company.margin;
+      document.getElementById("debt").textContent = company.debt;
+      document.getElementById("industry").textContent = company.industry;
+
+      document.getElementById("resultBox").style.display = "none";
+      document.getElementById("nextButton").style.display = "none";
+      answered = false;
+    }
+
+    function makeChoice(choice) {
+      if (answered) return;
+
+      const company = companies[currentIndex];
+      const resultBox = document.getElementById("resultBox");
+      round++;
+
+      if (choice === company.goodChoice) {
+        score++;
+        resultBox.innerHTML = "<strong>Good call.</strong> " + company.explanation;
+      } else {
+        resultBox.innerHTML = "<strong>Not the best choice.</strong> " + company.explanation;
+      }
+
+      document.getElementById("score").textContent = score;
+      document.getElementById("round").textContent = round;
+      resultBox.style.display = "block";
+      document.getElementById("nextButton").style.display = "inline-block";
+      answered = true;
+    }
+
+    function nextCompany() {
+      currentIndex++;
+
+      if (currentIndex >= companies.length) {
+        document.querySelector(".company-card").innerHTML = `
+          <h2>Game Complete</h2>
+          <p>You finished the investment challenge.</p>
+          <p><strong>Final Score: ${score} / ${round}</strong></p>
+          <p>Refresh the page to play again.</p>
+        `;
+        document.querySelector(".buttons").style.display = "none";
+        document.getElementById("resultBox").style.display = "none";
+        document.getElementById("nextButton").style.display = "none";
+        return;
+      }
+
+      loadCompany();
+    }
+
+    loadCompany();
+  </script>
+
+</body>
+</html> 
